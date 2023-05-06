@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
-# Installs nginx server
-apt-get update
+# a Bash script that installs nginx on our web-01 server
+# Nginx should be listening on port 80
+# When querying Nginx at its root / with a GET request
+# (requesting a page) using curl, it must return a page
+# that contains the string Holberton School
+apt-get -y update
 apt-get -y install nginx
+chown -R "$USER":"$USER" /var/www/html
+echo "Holberton School" > /var/www/html/index.nginx-debian.html
 ufw allow 'Nginx HTTP'
-echo "Hello World!" > /var/www/html/index.html
 service nginx start
