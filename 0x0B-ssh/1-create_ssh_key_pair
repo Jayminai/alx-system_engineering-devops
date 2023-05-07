@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# this script connects to the server provided by alx
+
+ssh-keygen -t rsa -f school -b 4096 -N betty
