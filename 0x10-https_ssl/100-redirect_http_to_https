@@ -46,7 +46,7 @@ frontend www-http
 	default_backend www-backend
 
 frontend www-https
-	bind *:443 ssl crt /etc/haproxy/certs/www.mariemmatri.tech.pem
+	bind *:443 ssl crt /etc/haproxy/certs/www.jayminai.tech.pem
 	reqadd X-Forwarded-Proto:\ https
 	acl letsencrypt-acl path_beg /.well-known/acme-challenge/
 	use_backend letsencrypt-backend if letsencrypt-acl
@@ -54,7 +54,7 @@ frontend www-https
 
 backend www-backend
 	redirect scheme https code 301 if !{ ssl_fc }
-	server 177534-web-01 100.25.133.25:80 check
+	server 177534-web-01 52.3.255.0:80 check
 	server 177534-web-02 34.232.67.247:80 check
 
 backend letsencrypt-backend
@@ -64,5 +64,5 @@ backend letsencrypt-backend
 #	bind *:80
 #	default_backend webservers
 #backend webservers
-#	server 177534-web-01 100.25.133.25:80 check
+#	server 177534-web-01 52.3.255.0:80 check
 #	server 177534-web-02 34.232.67.247:80 check
