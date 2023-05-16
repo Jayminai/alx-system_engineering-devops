@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-# run nignx webserver as user nginx and also configures it to
-# listen to port 8080
-pkill apache2
-sed -i 's/80/8080/g' /etc/nginx/sites-available/default
-chmod 644 /etc/nginx/nginx.conf
-sudo -u nginx service nginx restart
+# makes nginx run as user nginx
+sudo pkill apache2
+sudo chmod 644 /etc/nginx/nginx.conf
+sudo sed -i 's/80/8080/' /etc/nginx/sites-enabled/default
+sudo su nginx -c "service nginx start"
