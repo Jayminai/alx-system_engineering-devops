@@ -1,27 +1,38 @@
 #!/usr/bin/python3
-""" a Python script that, using a REST API, for a given employee ID,
-    returns information about his/her TODO list progress."""
+"""REST API for todo lists of employees"""
+
 import requests
 import sys
 
 
-if __name__ == '__main__':
-    url = 'https://jsonplaceholder.typicode.com/users/' + sys.argv[1]
-    r = requests.get(url)
-    name = r.json().get("name")
-    url2 = 'https://jsonplaceholder.typicode.com/todos'
-    r2 = requests.get(url2)
-    task_names = []
-    tasks = 0
-    completed = 0
-    for item in r2.json():
-        if item.get("userId") == int(sys.argv[1]):
-            tasks += 1
-            if item.get("completed") is True:
-                completed += 1
-                task_names.append(item.get("title"))
-    print("Employee {} is done with tasks({}/{}):".format(name,
-                                                          completed,
-                                                          tasks))
-    for i in task_names:
-        print("\t {}".format(i))
+def fetch_employee_todo_progress(employee_id):
+    base_url = "https://jsonplaceholder.typicode.com"
+    user_url = f"{base_url}/users/{employee_id}"
+    todo_url = f"{base_url}/users/{employee_id}/todos"
+
+    try:
+        user_response = requests.get(user_url)
+        todo_response = requests.get(todo_url)
+        user_response.raise_for_status()
+        todo_response.raise_for_status()
+    except requests.exceptions.RequestException as err:
+        print(f"Error occurred: {err}")
+        sys.exit(1)
+
+    employee_name = user_response.json().get("name")
+    tasks = todo_response.json()
+    completed_tasks = [task for task in tasks if task.get("completed")]
+
+    print(f"Employee {employee_name} is done with tasks({len(completed_tasks)}/{len(tasks)}):")
+
+    for task in completed_tasks:
+        print(f"\t{task.get('title')}")
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2 or not sys.argv[1].isdigit():
+        print("Please provide a valid employee ID as a parameter.")
+        sys.exit(1)
+
+    employee_id = sys.argv[1]
+    fetch_employee_todo_progress(employee_id)
