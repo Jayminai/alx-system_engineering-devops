@@ -19,8 +19,13 @@
 # Default server configuration
 #
 #upstream backend_server {
+<<<<<<< HEAD
 #	server 54.144.198.150;
 #	server 52.3.255.0:80;
+=======
+#	server 172.67.179.206;
+#	server 52.86.102.6:80;
+>>>>>>> b06da03ff7948918419fe584cb5625e1efd86ab9
 #}
 #
 server {
@@ -68,7 +73,11 @@ server {
 	}
 
 	location = /redirect_me {
+<<<<<<< HEAD
 		return 301 $scheme://github.com/jayminai;
+=======
+		return 301 $scheme://youtube.com/@sammykingx;
+>>>>>>> b06da03ff7948918419fe584cb5625e1efd86ab9
 	}
 
 	location = /airbnb-onepage {
