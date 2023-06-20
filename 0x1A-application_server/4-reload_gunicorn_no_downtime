@@ -6,9 +6,9 @@ worker_pids=$(pgrep -f "gunicorn")
 
 # Send a graceful reload signal to each worker
 for pid in $worker_pids; do
-    echo "Reloading Gunicorn worker $pid..."
     kill -HUP "$pid"
 done
 
+# Print a message to the console
 echo "OK"
 
