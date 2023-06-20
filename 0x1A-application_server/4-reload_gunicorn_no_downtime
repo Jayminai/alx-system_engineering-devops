@@ -10,5 +10,5 @@ for pid in $worker_pids; do
     kill -HUP "$pid"
 done
 
-echo "Gunicorn reload complete."
+echo "OK"
 
